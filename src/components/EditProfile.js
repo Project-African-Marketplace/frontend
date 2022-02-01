@@ -53,7 +53,7 @@ const EditProfile = ({
       setNewProfile({
         ...newProfile,
         file: file,
-        profilePicture: resolve(reader.result)
+        profilePicture: resolvePath(reader.result)
       })
     }
     reader.readAsDataURL(file);
@@ -61,13 +61,23 @@ const EditProfile = ({
   
   return (
     <div className="profile-container">
+      {
+        isFetching &&
+        <>
+        <h1>fetching profile....</h1>
+        </>
+      }
+      
+      { !isFetching &&
+      <div>
       <h2>Username: {profile.username}</h2>
       <h3>Bio: {profile.bio}</h3>
       <img className="ui medium circular image" src={profile.profilePicture} alt="User"/>
       <button className = "edit-btn large ui inverted green button" onClick={handleEdit}>Edit Profile</button>
-
+      </div>
+      }
       {
-        isEditing && 
+        isEditing && !isPosting && 
         <form className="ui form" onSubmit={handleSubmit}>
           <div className="field">
           <label>Username:</label>
