@@ -1,37 +1,48 @@
-import React,{useState} from "react";
+//npm imports
+import React, { useState, useEffect } from "react";
+import { connect } from 'react-redux';
+import { resolvePath } from "react-router";
 
-const initialProfile = {
-  username: "",
-  file:'',
-  profilePicture:'',
-  isEditing: false
-};
+//action imports
+import {
+  pToggleEdit,
+  getProfile,
+  postProfile
+} from '../actions/profileActions';
 
-const EditProfile = () => {
-  const [values,setValues] = useState(initialProfile);
+
+const EditProfile = ({
+  error, 
+  isPosting,
+  isFetching,
+  isEditing,
+  profile,
+  pToggleEdit,
+  postProfile,
+  getProfile
+}) => {
+
+  useEffect(() => {
+    getProfile();
+  }, [])
+
+  const [newProfile, setNewProfile] = useState(profile);
 
   const handleChange = (e) => {
-    setValues({
-      ...values,
+    setNewProfile({
+      ...newProfile,
       [e.target.name]: e.target.value
     })
   }
 
   const handleEdit = (e) => {
     e.preventDefault();
-    setValues({
-      ...values,
-      isEditing:!values.isEditing
-    })
+    pToggleEdit();
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setValues({
-      ...values,
-      isEditing: false
-    })
-    console.log(values)
+    postProfile(newProfile);
   }
 
   const handleUpload = (e) => {
@@ -39,31 +50,41 @@ const EditProfile = () => {
     const reader = new FileReader();
     const file = e.target.files[0];
     reader.onloadend = () => {
-      setValues({
-        ...values,
+      setNewProfile({
+        ...newProfile,
         file: file,
-        profilePicture: reader.result
-      });
+        profilePicture: resolve(reader.result)
+      })
     }
     reader.readAsDataURL(file);
-    
   }
   
   return (
     <div className="profile-container">
-      <h2>Username: {values.username}</h2>
-      <img className="ui medium circular image" src={values.profilePicture} alt="User"/>
+      <h2>Username: {profile.username}</h2>
+      <h3>Bio: {profile.bio}</h3>
+      <img className="ui medium circular image" src={profile.profilePicture} alt="User"/>
       <button className = "edit-btn large ui inverted green button" onClick={handleEdit}>Edit Profile</button>
 
       {
-        values.isEditing && 
+        isEditing && 
         <form className="ui form" onSubmit={handleSubmit}>
           <div className="field">
           <label>Username:</label>
           <input
             name="username"
             type="text"
-            value={values.username}
+            value={newProfile.username}
+            onChange={handleChange}
+          />
+          </div>
+
+          <div className="field">
+          <label>Username:</label>
+          <input
+            name="bio"
+            type="text"
+            value={newProfile.bio}
             onChange={handleChange}
           />
           </div>
@@ -84,4 +105,21 @@ const EditProfile = () => {
   )
 };
 
-export default EditProfile;
+const mapStateToProps = state => ({
+  isPosting: state.profile.isPosting,
+  isEditing: state.profile.isEditing,
+  isFetching: state.profile.isFetching,
+  profile: state.profile.profile,
+  error: state.profile.error
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  pToggleEdit: () => dispatch(pToggleEdit()),
+  postProfile: (profile) => dispatch(postProfile(profile)),
+  getProfile: () => dispatch(getProfile())
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditProfile);
