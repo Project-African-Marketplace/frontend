@@ -40,7 +40,8 @@ export const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isFetching: false,
-                profile: action.payload
+                profile: action.payload,
+                error: ''
             }
         
         case P_POST_START: 
@@ -52,7 +53,8 @@ export const profileReducer = (state = initialState, action) => {
         case P_POST_SUCCESS:
             return {
                 ...state,
-                isPosting: false
+                isPosting: false,
+                error: ''
             }
 
         case P_POST_FAILURE:

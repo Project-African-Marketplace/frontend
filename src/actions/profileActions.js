@@ -2,8 +2,6 @@
 import axiosWithAuth from "../utils/axiosWithAuth";
 
 // action exports
-export const GET_PROFILE = "GET_PROFILE";
-export const POST_PROFILE = "POST_PROFILE";
 export const P_FETCH_START = "P_FETCH_START";
 export const P_FETCH_SUCCESS = "P_FETCH_SUCCESS";
 export const P_FETCH_FAILURE = "P_FETCH_FAILURE";
@@ -15,7 +13,7 @@ export const P_TOGGLE_EDIT = "P_TOGGLE_EDIT";
 export const getProfile = (dispatch) => {
     return function thunk() {
         dispatch(pFetchStart());
-        axiosWithAuth.get(``
+        axiosWithAuth().get(``
         ).then(resp => {
             dispatch(pFetchSuccess(resp.data))
         }).catch(err => {
@@ -27,7 +25,7 @@ export const getProfile = (dispatch) => {
 export const postProfile = (dispatch) => {
     return function thunk(profile) {
         dispatchEvent(pPostStart());
-        axiosWithAuth.post(``, profile
+        axiosWithAuth().post(``, profile
         ).then(resp => {
             dispatch(pPostSuccess());
             dispatch(pToggleEdit());

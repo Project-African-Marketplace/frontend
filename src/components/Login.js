@@ -1,7 +1,10 @@
+// npm imports
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { axios } from "axios";
+
+// style imports
 import "../App.css"
-import axiosWithAuth from "../utils/axiosWithAuth";
 
 const initialCredentials = {
   username: "",
@@ -23,11 +26,10 @@ const Login = (props) => {
   const appLogin = (e) => {
     e.preventDefault();
     axiosWithAuth.post("/login", credentials).then((res) => {
-      console.log(res);
-      // const { token, username, role } = res.data;
-      // localStorage.setItem("token", token);
-      // localStorage.setItem("username", username);
-      // localStorage.setItem("role", role);
+      const { token, username, role } = res.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("username", username);
+      localStorage.setItem("role", role);
 
       history.push("/itemslist");
     });
