@@ -1,34 +1,59 @@
-import React,{useState,useEffect} from "react";
+//npm imports
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from 'axios';
+import { connect } from "react-redux";
 
+//component imports
 import Item from './Item';
 
-const ItemsList = () => {
-  const [items,setItems] = useState([]);
+//action imports
+import { getItems } from "../actions/itemActions";
+
+const ItemsList = (
+  isFetching,
+  items,
+  error
+) => {
+
   useEffect(()=> {
-    axios.get('https://fakerapi.it/api/v1/products')
-    .then(res =>{
-      console.log(res.data.data)
-      setItems(res.data.data)
-    })
-    .catch(err => console.log(err))
+    getItems()
   },[])
 
-  
-
   return(
-   
+    <>
+    {
+      error && 
+      <h2>{error}</h2>
+    }
+    {
+      isFetching &&
+      <h2>Fetching</h2>
+    }
+    { !isFetching && !error &&
     <div className="ui grid container">
       {items.map(item=> <div className="four wide column"><Item key={item.ean} item={item}/></div>)}
-    <div className="row">
-      <Link to="/additem">
-        <button className="large ui inverted green button">Add Item</button>
-      </Link>
+      <div className="row">
+        <Link to="/additem">
+          <button className="large ui inverted green button">Add Item</button>
+        </Link>
+      </div>
     </div>
-    
-    </div>
+    }
+    </>
   ) 
 };
 
-export default ItemsList;
+const mapStateToProps = state => ({
+  isFetching: state.item.isFetching,
+  items: state.item.items,
+  error: state.item.error
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  getItems: () => dispatch(getItems)
+})
+
+export default connect (
+  mapStateToProps,
+  mapDispatchToProps
+)(ItemsList);

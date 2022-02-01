@@ -10,7 +10,7 @@ const initialCredentials = {
 
 const Register = (props) => {
   const [credentials, setCredentials] = useState(initialCredentials);
-  let history = useNavigate();
+  const push = useNavigate();
 
   const handleChange = (e) => {
     setCredentials({
@@ -21,14 +21,11 @@ const Register = (props) => {
 
   const appLogin = (e) => {
     e.preventDefault();
-    axios.post("", credentials).then((res) => {
-      console.log(res);
-      const { token, username, role } = res.data;
-      localStorage.setItem("token", token);
-      localStorage.setItem("username", username);
-      localStorage.setItem("role", role);
-
-      history.push("/itemslist");
+    axios.post("https://africanmarketplace-backend.herokuapp.com/api/auth/register", credentials).then((res) => {
+      console.log(res.data.username);
+      localStorage.setItem("username", res.data.username);
+      localStorage.setItem("role", res.data.role);
+      push("./itemslist", { replace: true });
     });
   };
 
@@ -56,7 +53,7 @@ const Register = (props) => {
         />
         </div>
         <div className="field">
-        <select name="role" class="ui selection dropdown">
+        <select name="role" className="ui selection dropdown">
           <option value=""></option>
           <option value="Owner">Owner</option>
           <option value="Owner">Customer</option>

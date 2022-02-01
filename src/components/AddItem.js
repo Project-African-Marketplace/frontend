@@ -1,4 +1,9 @@
+//npm imports
 import React, { useState } from "react";
+import { connect } from "react-redux";
+
+//action imports
+import { postItem } from "../actions/itemActions";
 
 const initialValues = {
   name: "",
@@ -20,11 +25,17 @@ const AddItem = () => {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    postItem(item);
+  }
+
+
 return (
   <div className="box-container">
     <h1>Add Item</h1>
 
-    <form className="ui form">
+    <form className="ui form" onSubmit={handleSubmit}>
 
       <div className="field">
       <label>Name:</label>
@@ -118,4 +129,8 @@ return (
   );
 };
 
-export default AddItem;
+const mapDispatchToProps = (dispatch) => ({
+  postItem: (item) => dispatch(postItem(item))
+})
+
+export default connect(mapDispatchToProps(AddItem));

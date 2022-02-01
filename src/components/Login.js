@@ -1,7 +1,7 @@
 // npm imports
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { axios } from "axios";
+import axios from "axios";
 
 // style imports
 import "../App.css"
@@ -14,7 +14,7 @@ const initialCredentials = {
 
 const Login = (props) => {
   const [credentials, setCredentials] = useState(initialCredentials);
-  let history = useNavigate();
+  const push = useNavigate();
 
   const handleChange = (e) => {
     setCredentials({
@@ -25,14 +25,17 @@ const Login = (props) => {
 
   const appLogin = (e) => {
     e.preventDefault();
-    axiosWithAuth.post("/login", credentials).then((res) => {
-      const { token, username, role } = res.data;
-      localStorage.setItem("token", token);
-      localStorage.setItem("username", username);
-      localStorage.setItem("role", role);
-
-      history.push("/itemslist");
-    });
+    console.log(credentials);
+    axios.post(`https://africanmarketplace-backend.herokuapp.com/api/auth/login`, credentials
+      ).then((res) => {
+        console.log(res.data);
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("username", res.data.username);
+        localStorage.setItem("role", res.data.role);
+        push("/itemslist", {replace: true});
+      }).catch((error) => {
+        console.log(error.message);
+      })
   };
 
 

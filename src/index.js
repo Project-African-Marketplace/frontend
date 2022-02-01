@@ -8,7 +8,7 @@ import thunk from "redux-thunk";
 import logger from "redux-logger";
 
 //reducer imports
-import { reducer } from './reducers/index'
+import reducer from './reducers/index'
 
 //compent imports
 import App from "./App";

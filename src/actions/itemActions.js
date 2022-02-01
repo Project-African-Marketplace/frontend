@@ -16,7 +16,7 @@ export const getItems = (dispatch) => {
         ).then(resp => {
             dispatch(iFetchSuccess(resp.data));
         }).catch(err => {
-            dispatch(iFetchFailure(err));
+            dispatch(iFetchFailure(err.message));
         });
     }
 }
@@ -28,7 +28,7 @@ export const postItem = (dispatch) => {
         ).then(resp => {
             dispatch(iPostSuccess(resp.data));
         }).catch(err => {
-            dispatch(iPostFailure(err));
+            dispatch(iPostFailure(err.message));
         })
     }
 }

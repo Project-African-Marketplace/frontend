@@ -17,7 +17,7 @@ export const getProfile = (dispatch) => {
         ).then(resp => {
             dispatch(pFetchSuccess(resp.data))
         }).catch(err => {
-            dispatch(pFetchFailure(err));
+            dispatch(pFetchFailure(err.message));
         })
     }
 }
@@ -30,7 +30,7 @@ export const postProfile = (dispatch) => {
             dispatch(pPostSuccess());
             dispatch(pToggleEdit());
         }).catch(err => {
-            dispatch(pPostFailure(err))
+            dispatch(pPostFailure(err.message))
         })
     }
 }

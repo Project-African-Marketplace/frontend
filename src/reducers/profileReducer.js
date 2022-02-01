@@ -22,7 +22,7 @@ const initialState = {
     error: ''
 }
 
-export const profileReducer = (state = initialState, action) => {
+export function profileReducer(state = initialState, action){
     switch(action.type) {
         case P_FETCH_START:
             return {
