@@ -13,6 +13,7 @@ import Logout from "./components/Logout";
 import EditProfile from "./components/EditProfile";
 import Register from "./components/Register";
 import ItemsList from "./components/ItemsList";
+import CategoryList from "./components/CategoryList";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/logout" element={<Logout />} />
         <Route path="/profile" element={<EditProfile />} />
         <Route path="/itemslist" element={<ItemsList />} />
+        <Route path="/categories" element={<CategoryList />} />
         <Route path="/additem" element={<AddItem />} />
       </Routes>
     </div>

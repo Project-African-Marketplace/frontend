@@ -1,12 +1,13 @@
 //npm imports
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router";
 
 //action imports
 import { postItem } from "../actions/itemActions";
 
 const initialValues = {
-  products: '',
+  product: '',
   description: '',
   price: '',
   category: ''
@@ -16,6 +17,7 @@ const AddItem = ({
   postItem
 }) => {
   const [item, setItem] = useState(initialValues);
+  const push = useNavigate()
 
   const handleChange = (e) => {
     setItem({
@@ -27,6 +29,7 @@ const AddItem = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     postItem(item);
+    push("/categories", {replace: true});
   }
 
 
@@ -40,8 +43,8 @@ return (
       <label>Name:</label>
       <input
         type="text"
-        name="products"
-        value={item.products}
+        name="product"
+        value={item.product}
         onChange={handleChange}
       />
       </div>
