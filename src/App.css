@@ -12,7 +12,7 @@
   border-radius: 15px;
   box-shadow: 4px 4px 8px 1px rgb(149, 148, 148);
   margin: 1% 15%;
-  padding: 2% 6%;
+  /* padding: 2% 6%; */
 }
 .profile-container{
   display: flex;
