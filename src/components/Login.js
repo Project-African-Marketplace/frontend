@@ -13,6 +13,7 @@ const initialCredentials = {
 };
 
 const Login = (props) => {
+  
   const [credentials, setCredentials] = useState(initialCredentials);
   const push = useNavigate();
 
@@ -24,6 +25,7 @@ const Login = (props) => {
   };
 
   const appLogin = (e) => {
+    console.log(credentials)
     e.preventDefault();
     axios.post(`https://africanmarketplace-backend.herokuapp.com/api/auth/login`, credentials
       ).then((res) => {
