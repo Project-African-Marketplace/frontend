@@ -20,6 +20,7 @@ const App = () => {
       <div className="navbar">
         <h2>African Marketplace</h2>
         <a href="/login" className="item">Login</a>
+        <a href="/logout" className="item">Logout</a>
       </div>
 
       <Routes>
