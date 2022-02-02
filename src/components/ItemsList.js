@@ -33,7 +33,7 @@ const ItemsList = ({
     <>
     {
       error && 
-      <h2>{error}</h2>
+      <h2>Tough Luck: {error}</h2>
     }
     {
       isFetching &&

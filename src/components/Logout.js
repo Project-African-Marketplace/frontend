@@ -7,11 +7,14 @@ const Logout = () => {
 
   useEffect(() => {
     axiosWithAuth()
-      .post("/logout")
+      .post("/logout",{})
       .then((resp) => {
         localStorage.removeItem("token");
         push("/login");
-      });
+      })
+      .catch(err=> {
+        console.error(err)
+      })
   }, [push]);
 
   return <div></div>;
