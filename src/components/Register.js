@@ -21,12 +21,12 @@ const Register = (props) => {
 
   const appLogin = (e) => {
     e.preventDefault();
-    axios.post("https://africanmarketplace-backend.herokuapp.com/api/auth/register", credentials).then((res) => {
-      console.log(res.data.username);
-      localStorage.setItem("username", res.data.username);
-      localStorage.setItem("role", res.data.role);
-      push("./itemslist", { replace: true });
-    });
+    axios.post("https://africanmarketplace-backend.herokuapp.com/api/auth/register", credentials
+      ).then((res) => {
+        localStorage.setItem("username", res.data.username);
+        localStorage.setItem("role", res.data.role);
+        push("/itemslist", { replace: true });
+      });
   };
 
   return (

@@ -9,14 +9,16 @@ import Item from './Item';
 //action imports
 import { getItems } from "../actions/itemActions";
 
-const ItemsList = (
+const ItemsList = ({
   isFetching,
   items,
-  error
-) => {
+  error, 
+  dispatch
+}) => {
 
   useEffect(()=> {
-    getItems()
+    dispatch(getItems());
+    console.log(items);
   },[])
 
   return(
@@ -29,7 +31,7 @@ const ItemsList = (
       isFetching &&
       <h2>Fetching</h2>
     }
-    { !isFetching && !error &&
+    {!isFetching && !error &&
     <div className="ui grid container">
       {items.map(item=> <div className="four wide column"><Item key={item.ean} item={item}/></div>)}
       <div className="row">
@@ -49,11 +51,10 @@ const mapStateToProps = state => ({
   error: state.item.error
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  getItems: () => dispatch(getItems)
-})
+// const mapDispatchToProps = (dispatch) => ({
+//   getItems: () => dispatch(getItems())
+// })
 
 export default connect (
   mapStateToProps,
-  mapDispatchToProps
 )(ItemsList);

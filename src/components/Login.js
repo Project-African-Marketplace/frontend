@@ -25,13 +25,10 @@ const Login = (props) => {
 
   const appLogin = (e) => {
     e.preventDefault();
-    console.log(credentials);
     axios.post(`https://africanmarketplace-backend.herokuapp.com/api/auth/login`, credentials
       ).then((res) => {
-        console.log(res.data);
+        console.log(res);
         localStorage.setItem("token", res.data.token);
-        localStorage.setItem("username", res.data.username);
-        localStorage.setItem("role", res.data.role);
         push("/itemslist", {replace: true});
       }).catch((error) => {
         console.log(error.message);

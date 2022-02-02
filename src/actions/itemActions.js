@@ -9,22 +9,25 @@ export const I_POST_START = "I_POST_START";
 export const I_POST_SUCCESS = "I_POST_SUCCESS";
 export const I_POST_FAILURE = "I_POST_FAILURE";
 
-export const getItems = (dispatch) => {
-    return function thunk() {
-        dispatch(iFetchStart());
-        axiosWithAuth().get(``
-        ).then(resp => {
-            dispatch(iFetchSuccess(resp.data));
-        }).catch(err => {
-            dispatch(iFetchFailure(err.message));
-        });
-    }
+export const getItems = () => (dispatch) => {
+    console.log('running')
+    dispatch(iFetchStart());
+    axiosWithAuth(
+    ).get(`/products`
+    ).then(resp => {
+        console.log(resp);
+        dispatch(iFetchSuccess(resp.data));
+    }).catch(err => {
+        dispatch(iFetchFailure(err.message));
+    });
+
 }
 
 export const postItem = (dispatch) => {
     return function thunk(item) {
+        console.log(item);
         dispatch(iPostStart());
-        axiosWithAuth().post(``, item
+        axiosWithAuth().post(`/products`, item
         ).then(resp => {
             dispatch(iPostSuccess(resp.data));
         }).catch(err => {
