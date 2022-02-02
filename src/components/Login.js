@@ -32,9 +32,10 @@ const Login = (props) => {
     e.preventDefault();
     axios.post(`https://africanmarketplace-backend.herokuapp.com/api/auth/login`, credentials
       ).then((res) => {
-        console.log(res);
+        console.log(res.data.token);
+        console.log(res.headers.authorization);
         localStorage.setItem("token", res.data.token);
-        push("/itemslist", {replace: true});
+        push("/categories", {replace: true});
       }).catch((error) => {
         console.log(error.message);
       })
