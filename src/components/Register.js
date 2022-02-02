@@ -25,7 +25,7 @@ const Register = (props) => {
       ).then((res) => {
         localStorage.setItem("username", res.data.username);
         localStorage.setItem("role", res.data.role);
-        push("/itemslist", { replace: true });
+        push("/login", { replace: true });
       });
   };
 
@@ -55,8 +55,8 @@ const Register = (props) => {
         <div className="field">
         <select name="role" className="ui selection dropdown">
           <option value=""></option>
-          <option value="Owner">Owner</option>
-          <option value="Owner">Customer</option>
+          <option value="owner">Owner</option>
+          <option value="user">Customer</option>
         </select>
         </div>
         <button className="large ui inverted green button">Submit</button>

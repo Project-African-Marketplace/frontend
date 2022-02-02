@@ -1,7 +1,7 @@
 //npm imports
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router";
 
 //component imports
 import Item from './Item';
@@ -12,14 +12,22 @@ import { getItems } from "../actions/itemActions";
 const ItemsList = ({
   isFetching,
   items,
-  error, 
+  error,
+  categorySelected, 
   dispatch
 }) => {
 
+  const push = useNavigate();
+
   useEffect(()=> {
-    dispatch(getItems());
+    dispatch(getItems(categorySelected));
     console.log(items);
   },[])
+
+  const handleAddItem = (e) => {
+    e.preventDefault();
+    push("/additem", {replace: true})
+  }
 
   return(
     <>
@@ -33,11 +41,9 @@ const ItemsList = ({
     }
     {!isFetching && !error &&
     <div className="ui grid container">
-      {items.map(item=> <div className="four wide column"><Item key={item.ean} item={item}/></div>)}
+      {items.map(item=> <div className="four wide column"><Item key={item.product_id} item={item}/></div>)}
       <div className="row">
-        <Link to="/additem">
-          <button className="large ui inverted green button">Add Item</button>
-        </Link>
+          <button className="large ui inverted green button" onClick={handleAddItem}>Add Item</button>
       </div>
     </div>
     }
@@ -48,13 +54,10 @@ const ItemsList = ({
 const mapStateToProps = state => ({
   isFetching: state.item.isFetching,
   items: state.item.items,
-  error: state.item.error
+  error: state.item.error,
+  categorySelected: state.item.categorySelected
 })
 
-// const mapDispatchToProps = (dispatch) => ({
-//   getItems: () => dispatch(getItems())
-// })
-
 export default connect (
-  mapStateToProps,
+  mapStateToProps
 )(ItemsList);
