@@ -12,7 +12,7 @@ import {
 
 
 const EditProfile = ({
-  error, 
+  error,
   isPosting,
   isFetching,
   isEditing,
@@ -68,13 +68,16 @@ const EditProfile = ({
         </>
       }
       
-      { !isFetching &&
+      { !isFetching && !error &&
       <div>
       <h2>Username: {profile.username}</h2>
       <h3>Bio: {profile.bio}</h3>
       <img className="ui medium circular image" src={profile.profilePicture} alt="User"/>
       <button className = "edit-btn large ui inverted green button" onClick={handleEdit}>Edit Profile</button>
       </div>
+      }
+      { error &&
+      <h2>{error}</h2>
       }
       {
         isEditing && !isPosting && 

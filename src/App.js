@@ -1,7 +1,11 @@
+//styling import
 import "./App.css";
+
+//npm imports
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
+//component imports
 import HomePage from "./components/HomePage"
 import AddItem from "./components/AddItem";
 import Login from "./components/Login";
